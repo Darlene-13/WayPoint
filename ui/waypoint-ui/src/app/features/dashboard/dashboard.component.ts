@@ -15,6 +15,7 @@ import { Reminder } from '../../core/models/reminder.model';
   styleUrl: './dashboard.component.css'
 })
 export class DashboardComponent implements OnInit {
+  sidebarCollapsed = false;
   summary: DashboardSummary | null = null;
   followUpsToday: Reminder[] = [];
   applications: JobApplication[] = [];
@@ -27,6 +28,10 @@ export class DashboardComponent implements OnInit {
     private readonly reminderService: ReminderService,
     private readonly jobApplicationService: JobApplicationService
   ) {}
+
+  toggleSidebar(): void {
+    this.sidebarCollapsed = !this.sidebarCollapsed;
+  }
 
   ngOnInit(): void {
     this.restoreTheme();
