@@ -1,8 +1,8 @@
-package com.waypoint.api.resume;
+package io.github.darlene.waypoint.resume;
 
-import com.waypoint.api.common.exception.ResourceNotFoundException;
-import com.waypoint.api.resume.dto.ResumeRequest;
-import com.waypoint.api.resume.dto.ResumeResponse;
+import io.github.darlene.waypoint.common.exception.ResourceNotFoundException;
+import io.github.darlene.waypoint.resume.dto.ResumeRequest;
+import io.github.darlene.waypoint.resume.dto.ResumeResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

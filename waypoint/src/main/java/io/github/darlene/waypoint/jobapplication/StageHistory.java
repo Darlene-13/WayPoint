@@ -1,4 +1,4 @@
-package com.waypoint.api.jobapplication;
+package io.github.darlene.waypoint.jobapplication;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

@@ -1,4 +1,4 @@
-package com.waypoint.api.jobapplication;
+package io.github.darlene.waypoint.jobapplication;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

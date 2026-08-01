@@ -1,6 +1,6 @@
-package com.waypoint.api.contact;
+package io.github.darlene.waypoint.contact;
 
-import com.waypoint.api.company.Company;
+import io.github.darlene.waypoint.company.Company;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -1,7 +1,7 @@
-package com.waypoint.api.resume;
+package io.github.darlene.waypoint.resume;
 
-import com.waypoint.api.resume.dto.ResumeRequest;
-import com.waypoint.api.resume.dto.ResumeResponse;
+import io.github.darlene.waypoint.resume.dto.ResumeRequest;
+import io.github.darlene.waypoint.resume.dto.ResumeResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

@@ -1,10 +1,10 @@
-package com.waypoint.api.contact;
+package io.github.darlene.waypoint.contact;
 
-import com.waypoint.api.common.exception.ResourceNotFoundException;
-import com.waypoint.api.company.Company;
-import com.waypoint.api.company.CompanyRepository;
-import com.waypoint.api.contact.dto.ContactRequest;
-import com.waypoint.api.contact.dto.ContactResponse;
+import io.github.darlene.waypoint.common.exception.ResourceNotFoundException;
+import io.github.darlene.waypoint.company.Company;
+import io.github.darlene.waypoint.company.CompanyRepository;
+import io.github.darlene.waypoint.contact.dto.ContactRequest;
+import io.github.darlene.waypoint.contact.dto.ContactResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

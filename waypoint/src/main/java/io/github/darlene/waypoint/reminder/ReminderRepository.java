@@ -1,4 +1,4 @@
-package com.waypoint.api.reminder;
+package io.github.darlene.waypoint.reminder;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

@@ -1,7 +1,7 @@
-package com.waypoint.api.jobapplication.dto;
+package io.github.darlene.waypoint.jobapplication.dto;
 
-import com.waypoint.api.jobapplication.ApplicationStage;
-import com.waypoint.api.jobapplication.WorkMode;
+import io.github.darlene.waypoint.jobapplication.ApplicationStage;
+import io.github.darlene.waypoint.jobapplication.WorkMode;
 
 import java.math.BigDecimal;
 import java.time.Instant;

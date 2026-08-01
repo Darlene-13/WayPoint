@@ -1,4 +1,4 @@
-package com.waypoint.api.resume;
+package io.github.darlene.waypoint.resume;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

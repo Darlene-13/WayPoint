@@ -1,6 +1,6 @@
-package com.waypoint.api.contact.dto;
+package io.github.darlene.waypoint.contact.dto;
 
-import com.waypoint.api.contact.ContactRole;
+import io.github.darlene.waypoint.contact.ContactRole;
 
 import java.time.Instant;
 import java.util.UUID;

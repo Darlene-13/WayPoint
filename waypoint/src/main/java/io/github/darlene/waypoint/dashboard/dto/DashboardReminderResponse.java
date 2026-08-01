@@ -1,17 +1,16 @@
-package io.github.darlene.waypoint.reminder.dto;
+package io.github.darlene.waypoint.dashboard.dto;
 
 import io.github.darlene.waypoint.reminder.ReminderType;
-
 import java.time.LocalDate;
 import java.util.UUID;
 
-public record ReminderResponse(
+public record DashboardReminderResponse(
         UUID id,
         UUID applicationId,
         String companyName,
         String position,
-        ReminderType reminderType,
+        ReminderType type,
         LocalDate dueDate,
-        boolean isCompleted,
+        boolean completed,
         String notes
 ) {}

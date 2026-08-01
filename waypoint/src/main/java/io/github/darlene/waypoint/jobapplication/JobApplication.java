@@ -1,7 +1,7 @@
-package com.waypoint.api.jobapplication;
+package io.github.darlene.waypoint.jobapplication;
 
-import com.waypoint.api.company.Company;
-import com.waypoint.api.resume.Resume;
+import io.github.darlene.waypoint.company.Company;
+import io.github.darlene.waypoint.resume.Resume;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

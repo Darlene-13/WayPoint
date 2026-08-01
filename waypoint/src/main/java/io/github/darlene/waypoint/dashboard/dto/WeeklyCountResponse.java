@@ -1,4 +1,4 @@
-package com.waypoint.api.dashboard.dto;
+package io.github.darlene.waypoint.dashboard.dto;
 
 import java.time.LocalDate;
 

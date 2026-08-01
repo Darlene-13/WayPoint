@@ -1,12 +1,12 @@
-package com.waypoint.api.dashboard.dto;
+package io.github.darlene.waypoint.dashboard.dto;
 
-import com.waypoint.api.jobapplication.ApplicationStage;
+import io.github.darlene.waypoint.jobapplication.ApplicationStage;
 
-import java.util.Map;
+import java.util.List;
 
 public record DashboardSummaryResponse(
         long totalApplications,
-        Map<ApplicationStage, Long> countsByStage,
+        List<StageCountResponse> countsByStage,
         double responseRatePct,
         double successRatePct,
         long followUpsDueToday

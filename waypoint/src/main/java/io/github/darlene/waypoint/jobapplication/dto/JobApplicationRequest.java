@@ -1,6 +1,6 @@
-package com.waypoint.api.jobapplication.dto;
+package io.github.darlene.waypoint.jobapplication.dto;
 
-import com.waypoint.api.jobapplication.WorkMode;
+import io.github.darlene.waypoint.jobapplication.WorkMode;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 

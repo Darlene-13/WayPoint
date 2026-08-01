@@ -1,4 +1,4 @@
-package com.waypoint.api.common.exception;
+package io.github.darlene.waypoint.common.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

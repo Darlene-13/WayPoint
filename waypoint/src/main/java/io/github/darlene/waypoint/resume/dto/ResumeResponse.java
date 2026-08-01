@@ -1,4 +1,4 @@
-package com.waypoint.api.resume.dto;
+package io.github.darlene.waypoint.resume.dto;
 
 import java.time.Instant;
 import java.util.UUID;

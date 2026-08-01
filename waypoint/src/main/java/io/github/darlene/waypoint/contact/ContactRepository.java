@@ -1,4 +1,4 @@
-package com.waypoint.api.contact;
+package io.github.darlene.waypoint.contact;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

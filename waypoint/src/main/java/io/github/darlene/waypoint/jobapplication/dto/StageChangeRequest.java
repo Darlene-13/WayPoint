@@ -1,6 +1,6 @@
-package com.waypoint.api.jobapplication.dto;
+package io.github.darlene.waypoint.jobapplication.dto;
 
-import com.waypoint.api.jobapplication.ApplicationStage;
+import io.github.darlene.waypoint.jobapplication.ApplicationStage;
 import jakarta.validation.constraints.NotNull;
 
 public record StageChangeRequest(

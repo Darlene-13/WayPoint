@@ -1,7 +1,7 @@
-package com.waypoint.api.contact;
+package io.github.darlene.waypoint.contact;
 
-import com.waypoint.api.contact.dto.ContactRequest;
-import com.waypoint.api.contact.dto.ContactResponse;
+import io.github.darlene.waypoint.contact.dto.ContactRequest;
+import io.github.darlene.waypoint.contact.dto.ContactResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

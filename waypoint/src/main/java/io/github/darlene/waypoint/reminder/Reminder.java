@@ -1,6 +1,6 @@
-package com.waypoint.api.reminder;
+package io.github.darlene.waypoint.reminder;
 
-import com.waypoint.api.jobapplication.JobApplication;
+import io.github.darlene.waypoint.jobapplication.JobApplication;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
