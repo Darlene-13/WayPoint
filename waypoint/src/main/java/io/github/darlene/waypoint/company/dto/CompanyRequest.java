@@ -1,4 +1,4 @@
-package com.waypoint.api.company.dto;
+package io.github.darlene.waypoint.company.dto;
 
 import jakarta.validation.constraints.NotBlank;
 

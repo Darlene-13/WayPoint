@@ -1,4 +1,4 @@
-package com.waypoint.api.company;
+package io.github.darlene.waypoint.company;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

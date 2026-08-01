@@ -1,8 +1,9 @@
-package com.waypoint.api.company.dto;
+package io.github.darlene.waypoint.company.dto;
 
 import java.time.Instant;
 import java.util.UUID;
 
+// What is gives me back as a user or FE
 public record CompanyResponse(
         UUID id,
         String name,
