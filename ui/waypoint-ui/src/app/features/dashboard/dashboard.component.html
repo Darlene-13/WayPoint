@@ -1,0 +1,110 @@
+<div class="frame">
+  <header class="topbar">
+    <div class="brand-group">
+      <div class="brand-mark" aria-hidden="true">W</div>
+      <div>
+        <div class="wordmark">WAY<span>POINT</span></div>
+        <p class="brand-caption">Job search command center</p>
+      </div>
+    </div>
+    <div class="header-actions">
+      <div class="cycle"><span class="status-dot"></span> Search active</div>
+      <button
+        class="theme-toggle"
+        type="button"
+        (click)="toggleTheme()"
+        [attr.aria-label]="isLightMode ? 'Switch to dark mode' : 'Switch to light mode'"
+        [attr.title]="isLightMode ? 'Switch to dark mode' : 'Switch to light mode'">
+        <svg *ngIf="!isLightMode" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v2m0 14v2M3 12h2m14 0h2M5.64 5.64l1.42 1.42m9.88 9.88 1.42 1.42m0-12.72-1.42 1.42M7.06 16.94l-1.42 1.42M16 12a4 4 0 1 1-8 0 4 4 0 0 1 8 0Z"/></svg>
+        <svg *ngIf="isLightMode" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.4 15.2A8.5 8.5 0 0 1 8.8 3.6 8.5 8.5 0 1 0 20.4 15.2Z"/></svg>
+        <span>{{ isLightMode ? 'Dark' : 'Light' }}</span>
+      </button>
+    </div>
+  </header>
+
+  <section class="intro">
+    <div>
+      <p class="eyebrow">Overview</p>
+      <h1>Your job search,<br><span>at a glance.</span></h1>
+    </div>
+    <p class="intro-copy">Track momentum, stay on top of follow-ups, and keep every opportunity moving forward.</p>
+  </section>
+
+  <section class="readouts" aria-label="Application summary">
+    <div class="readout">
+      <p class="readout-label">Sent</p>
+      <p class="readout-value">{{ summary?.totalApplications ?? 0 }}</p>
+    </div>
+    <div class="readout">
+      <p class="readout-label">Response rate</p>
+      <p class="readout-value accent">{{ summary?.responseRatePct ?? 0 }}%</p>
+    </div>
+    <div class="readout">
+      <p class="readout-label">Interviews</p>
+      <p class="readout-value teal">{{ stageCount('INTERVIEW') }}</p>
+    </div>
+    <div class="readout">
+      <p class="readout-label">Offers</p>
+      <p class="readout-value success">{{ stageCount('OFFER') }}</p>
+    </div>
+    <div class="readout">
+      <p class="readout-label">Follow-ups today</p>
+      <p class="readout-value">{{ summary?.followUpsDueToday ?? 0 }}</p>
+    </div>
+  </section>
+
+  <div class="section-heading">
+    <div><p class="section-kicker">Progress</p><h2>Application pipeline</h2></div>
+    <div class="data-actions">
+      <button class="data-button" type="button" (click)="exportApplications()">↓ Export CSV</button>
+      <label class="data-button" for="application-import">↑ Import CSV</label>
+      <input id="application-import" type="file" accept=".csv,.xlsx" (change)="importApplications($event)" />
+    </div>
+  </div>
+  <section class="pipeline-card">
+  <div class="route">
+    <div class="route-track"></div>
+    <div class="route-track-neg"></div>
+
+    <div class="waypoint">
+      <div class="node">{{ stageCount('APPLIED') }}</div>
+      <p class="waypoint-label">Applied</p>
+    </div>
+    <div class="waypoint">
+      <div class="node active">{{ stageCount('OA') }}</div>
+      <p class="waypoint-label">OA</p>
+    </div>
+    <div class="waypoint">
+      <div class="node in-motion">{{ stageCount('INTERVIEW') }}</div>
+      <p class="waypoint-label">Interview</p>
+    </div>
+    <div class="waypoint">
+      <div class="node success">{{ stageCount('OFFER') }}</div>
+      <p class="waypoint-label">Offer</p>
+    </div>
+    <div class="waypoint closed-out">
+      <div class="node negative">{{ closedOutCount() }}</div>
+      <p class="waypoint-label">Closed out</p>
+    </div>
+  </div>
+  </section>
+  <p class="import-message" *ngIf="importMessage">{{ importMessage }}</p>
+
+  <div class="section-heading followup-heading">
+    <div><p class="section-kicker">Next actions</p><h2>Follow-ups today</h2></div>
+    <span class="count-pill">{{ followUpsToday.length }} due</span>
+  </div>
+  <section class="log">
+    <div class="log-row" *ngFor="let reminder of followUpsToday">
+      <div class="log-main">
+        <p class="log-company">{{ reminder.companyName }} — {{ reminder.position }}</p>
+        <p class="log-meta due-now">{{ reminderLabel(reminder) }}</p>
+      </div>
+      <span class="log-tag">{{ reminder.reminderType }}</span>
+    </div>
+    <div class="log-empty" *ngIf="followUpsToday.length === 0">
+      <span class="empty-check">✓</span>
+      <div><strong>You're all caught up</strong><p>Nothing needs your attention today.</p></div>
+    </div>
+  </section>
+</div>

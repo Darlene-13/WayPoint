@@ -1,0 +1,28 @@
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { environment } from '../../../environments/environment';
+import { Resume, ResumeRequest } from '../models/resume.model';
+
+@Injectable({ providedIn: 'root' })
+export class ResumeService {
+  private readonly baseUrl = `${environment.apiBaseUrl}/resumes`;
+
+  constructor(private readonly http: HttpClient) {}
+
+  list(): Observable<Resume[]> {
+    return this.http.get<Resume[]>(this.baseUrl);
+  }
+
+  getById(id: string): Observable<Resume> {
+    return this.http.get<Resume>(`${this.baseUrl}/${id}`);
+  }
+
+  create(payload: ResumeRequest): Observable<Resume> {
+    return this.http.post<Resume>(this.baseUrl, payload);
+  }
+
+  delete(id: string): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/${id}`);
+  }
+}
