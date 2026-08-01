@@ -7,7 +7,7 @@
     <div class="nav-label">Workspace</div>
     <button class="collapse-button" type="button" (click)="toggleSidebar()" [attr.aria-label]="sidebarCollapsed ? 'Expand navigation' : 'Collapse navigation'"><span>‹</span><b>{{ sidebarCollapsed ? 'Expand' : 'Collapse' }}</b></button>
     <nav class="main-nav">
-      <a class="active" href="/" aria-current="page"><span class="nav-icon">⌂</span><span>Overview</span><span class="nav-arrow">↗</span></a>
+      <a class="active" href="/" aria-current="page"><span class="nav-icon">⌂</span><span>Overview</span></a>
       <a href="/companies"><span class="nav-icon">▦</span><span>Companies</span></a>
       <a href="#pipeline"><span class="nav-icon">◌</span><span>Applications</span></a>
       <a href="#follow-ups"><span class="nav-icon">◷</span><span>Follow-ups</span><span class="nav-count">{{ summary?.followUpsDueToday ?? 0 }}</span></a>
