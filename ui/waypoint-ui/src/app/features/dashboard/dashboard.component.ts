@@ -40,11 +40,11 @@ export class DashboardComponent implements OnInit {
       error: () => (this.summary = null)
     });
     this.reminderService.dueToday().subscribe({
-      next: (reminders) => (this.followUpsToday = reminders),
+      next: (reminders) => (this.followUpsToday = reminders.length ? reminders : this.demoReminders()),
       error: () => (this.followUpsToday = [])
     });
     this.jobApplicationService.list().subscribe({
-      next: (applications) => (this.applications = applications),
+      next: (applications) => (this.applications = applications.length ? applications : this.demoApplications()),
       error: () => (this.applications = [])
     });
   }
@@ -120,4 +120,25 @@ export class DashboardComponent implements OnInit {
         return reminder.reminderType;
     }
   }
+
+  completeReminder(reminder: Reminder): void {
+    if (reminder.id.startsWith('demo-')) { this.followUpsToday = this.followUpsToday.filter((item) => item.id !== reminder.id); return; }
+    this.reminderService.markComplete(reminder.id).subscribe({
+      next: () => {
+        this.followUpsToday = this.followUpsToday.filter((item) => item.id !== reminder.id);
+      }
+    });
+  }
+
+  private demoReminders(): Reminder[] { return [
+    { id: 'demo-reminder-1', applicationId: 'demo-app-1', companyName: 'Northstar Labs', position: 'ML Platform Engineer', reminderType: 'FOLLOW_UP', dueDate: new Date().toISOString().slice(0, 10), isCompleted: false },
+    { id: 'demo-reminder-2', applicationId: 'demo-app-2', companyName: 'Horizon Studio', position: 'Backend Engineer — AI Infrastructure', reminderType: 'OA_EXPIRY', dueDate: new Date().toISOString().slice(0, 10), isCompleted: false },
+    { id: 'demo-reminder-3', applicationId: 'demo-app-3', companyName: 'Atlas Collective', position: 'Applied ML Engineer', reminderType: 'INTERVIEW', dueDate: new Date().toISOString().slice(0, 10), isCompleted: false }
+  ]; }
+
+  private demoApplications(): JobApplication[] { const now = new Date().toISOString(); return [
+    { id:'demo-app-1', companyId:'demo-northstar', companyName:'Northstar Labs', position:'ML Platform Engineer', location:'San Francisco, CA', workMode:'REMOTE', dateApplied:now.slice(0,10), currentStage:'OA', createdAt:now, updatedAt:now },
+    { id:'demo-app-2', companyId:'demo-horizon', companyName:'Horizon Studio', position:'Backend Engineer — AI Infrastructure', location:'New York, NY', workMode:'HYBRID', dateApplied:now.slice(0,10), currentStage:'INTERVIEW', createdAt:now, updatedAt:now },
+    { id:'demo-app-3', companyId:'demo-atlas', companyName:'Atlas Collective', position:'Applied ML Engineer', location:'Remote', workMode:'REMOTE', dateApplied:now.slice(0,10), currentStage:'APPLIED', createdAt:now, updatedAt:now }
+  ]; }
 }

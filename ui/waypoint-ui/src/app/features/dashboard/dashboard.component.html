@@ -10,7 +10,7 @@
       <a class="active" href="/" aria-current="page"><span class="nav-icon">⌂</span><span>Overview</span></a>
       <a href="/companies"><span class="nav-icon">▦</span><span>Companies</span></a>
       <a href="#pipeline"><span class="nav-icon">◌</span><span>Applications</span></a>
-      <a href="#follow-ups"><span class="nav-icon">◷</span><span>Follow-ups</span><span class="nav-count">{{ summary?.followUpsDueToday ?? 0 }}</span></a>
+      <a href="/reminders"><span class="nav-icon">◷</span><span>Reminders</span><span class="nav-count">{{ summary?.followUpsDueToday ?? 0 }}</span></a>
     </nav>
     <div class="sidebar-bottom">
       <div class="search-status"><span class="status-dot"></span><div><strong>Search active</strong><small>Agent is scanning</small></div></div>
@@ -100,6 +100,7 @@
         <p class="log-meta due-now">{{ reminderLabel(reminder) }}</p>
       </div>
       <span class="log-tag">{{ reminder.reminderType }}</span>
+      <button class="complete-reminder" type="button" (click)="completeReminder(reminder)">Complete</button>
     </div>
     <div class="log-empty" *ngIf="followUpsToday.length === 0">
       <span class="empty-check">Done</span>
