@@ -1,15 +1,18 @@
 package io.github.darlene.waypoint.jobapplication;
 
 import io.github.darlene.waypoint.common.exception.ResourceNotFoundException;
+import io.github.darlene.waypoint.common.exception.InvalidStageTransitionException;
 import io.github.darlene.waypoint.company.Company;
 import io.github.darlene.waypoint.company.CompanyRepository;
 import io.github.darlene.waypoint.resume.Resume;
 import io.github.darlene.waypoint.resume.ResumeRepository;
 import lombok.RequiredArgsConstructor;
+import org.jspecify.annotations.NonNull;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import io.github.darlene.waypoint.jobapplication.dto.JobApplicationRequest;
 import io.github.darlene.waypoint.jobapplication.dto.JobApplicationResponse;
+import io.github.darlene.waypoint.jobapplication.dto.StageChangeRequest;
 
 import java.util.List;
 import java.util.UUID;
@@ -69,17 +72,58 @@ public class JobApplicationService {
 
     @Transactional
     public JobApplicationResponse changeStage(
-            UUID id, ApplicationStage newStage, String notes) {
+            UUID id, StageChangeRequest request) {
         JobApplication application = getOrThrow(id);
+        // Get the current stage of the application
+        ApplicationStage newStage = getNewStage(request, application);
+
         application.setCurrentStage(newStage);
 
         stageHistoryRepository.save(StageHistory.builder()
                 .application(application)
                 .stage(newStage)
-                .notes(notes)
+                .notes(request.notes())
                 .build());
 
         return toResponse(jobApplicationRepository.save(application));
+    }
+
+    private @NonNull ApplicationStage getNewStage(StageChangeRequest request, JobApplication application) {
+        ApplicationStage currentStage = application.getCurrentStage();
+        ApplicationStage newStage = request.newStage();
+
+        if (!isAllowedTransition(currentStage, newStage)) {
+            throw new InvalidStageTransitionException(
+                    "Cannot move from " + currentStage + " to " + newStage);
+        }
+        if ((newStage == ApplicationStage.OA || newStage == ApplicationStage.INTERVIEW)
+                && request.reminderDate() == null) {
+            throw new IllegalArgumentException(
+                    "reminderDate is required when moving to " + newStage);
+        }
+        return newStage;
+    }
+
+
+    // Take care of stage transition
+    private boolean isAllowedTransition(ApplicationStage currentStage, ApplicationStage newStage) {
+        if (currentStage == null || newStage == null || currentStage == newStage) {
+            return false;
+        }
+        // Terminal outcomes may be selected from any active stage, but cannot be changed again.
+        if (newStage == ApplicationStage.REJECTED
+                || newStage == ApplicationStage.WITHDRAWN
+                || newStage == ApplicationStage.GHOSTED) {
+            return currentStage != ApplicationStage.REJECTED
+                    && currentStage != ApplicationStage.WITHDRAWN
+                    && currentStage != ApplicationStage.GHOSTED;
+        }
+        return switch (currentStage) {
+            case APPLIED -> newStage == ApplicationStage.OA;
+            case OA -> newStage == ApplicationStage.INTERVIEW;
+            case INTERVIEW -> newStage == ApplicationStage.OFFER;
+            case OFFER, REJECTED, WITHDRAWN, GHOSTED -> false;
+        };
     }
 
     public void delete(UUID id) {

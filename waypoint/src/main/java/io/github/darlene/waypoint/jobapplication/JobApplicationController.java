@@ -40,7 +40,7 @@ public class JobApplicationController{
     public JobApplicationResponse changeStage(
             @PathVariable UUID id,
             @Valid @RequestBody StageChangeRequest request) {
-        return jobApplicationService.changeStage(id, request.newStage(), request.notes());
+        return jobApplicationService.changeStage(id, request);
     }
 
     @DeleteMapping("/{id}")
