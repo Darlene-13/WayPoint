@@ -21,6 +21,10 @@ export class ResumeService {
   create(payload: ResumeRequest): Observable<Resume> {
     return this.http.post<Resume>(this.baseUrl, payload);
   }
+  upload(label: string, targetRole: string, file: File): Observable<Resume> {
+    const data = new FormData(); data.append('label', label); if (targetRole) data.append('targetRole', targetRole); data.append('file', file);
+    return this.http.post<Resume>(`${this.baseUrl}/upload`, data);
+  }
 
   delete(id: string): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/${id}`);

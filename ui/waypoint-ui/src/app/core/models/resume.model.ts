@@ -3,6 +3,8 @@ export interface Resume {
   label: string;
   targetRole?: string;
   fileUrl?: string;
+  fileName?: string;
+  contentType?: string;
   createdAt: string;
 }
 

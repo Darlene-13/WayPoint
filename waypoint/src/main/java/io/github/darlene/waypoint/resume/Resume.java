@@ -31,6 +31,8 @@ public class Resume {
     private String targetRole;
 
     private String fileUrl;
+    private String fileName;
+    private String contentType;
 
     @Column(nullable = false, updatable = false)
     private Instant createdAt;

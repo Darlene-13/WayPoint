@@ -8,5 +8,7 @@ public record ResumeResponse(
         String label,
         String targetRole,
         String fileUrl,
+        String fileName,
+        String contentType,
         Instant createdAt
 ) {}

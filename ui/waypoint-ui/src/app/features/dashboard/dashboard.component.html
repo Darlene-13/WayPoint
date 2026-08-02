@@ -9,8 +9,10 @@
     <nav class="main-nav">
       <a class="active" href="/" aria-current="page"><span class="nav-icon">⌂</span><span>Overview</span></a>
       <a href="/companies"><span class="nav-icon">▦</span><span>Companies</span></a>
-      <a href="#pipeline"><span class="nav-icon">◌</span><span>Applications</span></a>
+      <a href="/applications"><span class="nav-icon">◌</span><span>Applications</span></a>
       <a href="/reminders"><span class="nav-icon">◷</span><span>Reminders</span><span class="nav-count">{{ summary?.followUpsDueToday ?? 0 }}</span></a>
+      <a href="/resumes"><span class="nav-icon">▤</span><span>Resumes</span></a>
+      <a href="/contacts"><span class="nav-icon">◎</span><span>Contacts</span></a>
     </nav>
     <div class="sidebar-bottom">
       <div class="search-status"><span class="status-dot"></span><div><strong>Search active</strong><small>Agent is scanning</small></div></div>
@@ -88,6 +90,10 @@
   </div>
   </section>
   <p class="import-message" *ngIf="importMessage">{{ importMessage }}</p>
+  <section class="dashboard-insights">
+    <article class="insight-card"><div class="section-heading"><div><p class="section-kicker">Momentum</p><h2>Applications by week</h2></div></div><div class="mini-chart"><div class="bar-column" *ngFor="let item of weekly"><span class="bar-value">{{item.applicationsSent}}</span><div class="bar" [style.height.%]="barHeight(item.applicationsSent)"></div><small>{{item.weekStarting | date:'MMM d'}}</small></div><p *ngIf="weekly.length===0">Weekly data will appear here.</p></div></article>
+    <article class="insight-card"><div class="section-heading"><div><p class="section-kicker">Materials</p><h2>Resume performance</h2></div></div><div class="resume-row" *ngFor="let item of resumePerformance"><div><strong>{{item.resumeLabel}}</strong><small>{{item.interviews}} interviews from {{item.totalSent}} applications</small></div><span>{{item.interviewRatePct}}%</span></div><p *ngIf="resumePerformance.length===0">Resume performance will appear after applications use your resumes.</p></article>
+  </section>
 
   <div class="section-heading followup-heading">
     <div><p class="section-kicker">Next actions</p><h2>Follow-ups today</h2></div>

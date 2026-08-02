@@ -2,7 +2,7 @@ import { Component, DOCUMENT, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DashboardService } from '../../core/services/dashboard.service';
 import { ReminderService } from '../../core/services/reminder.service';
-import { DashboardSummary } from '../../core/models/dashboard.model';
+import { DashboardSummary, ResumePerformance, WeeklyCount } from '../../core/models/dashboard.model';
 import { ApplicationStage, JobApplication } from '../../core/models/job-application.model';
 import { JobApplicationService } from '../../core/services/job-application.service';
 import { Reminder } from '../../core/models/reminder.model';
@@ -19,6 +19,8 @@ export class DashboardComponent implements OnInit {
   summary: DashboardSummary | null = null;
   followUpsToday: Reminder[] = [];
   applications: JobApplication[] = [];
+  weekly: WeeklyCount[] = [];
+  resumePerformance: ResumePerformance[] = [];
   importMessage = '';
   isLightMode = false;
   private readonly document = inject(DOCUMENT);
@@ -47,6 +49,8 @@ export class DashboardComponent implements OnInit {
       next: (applications) => (this.applications = applications.length ? applications : this.demoApplications()),
       error: () => (this.applications = [])
     });
+    this.dashboardService.getApplicationsPerWeek(8).subscribe({ next: data => this.weekly = data, error: () => this.weekly = [] });
+    this.dashboardService.getBestPerformingResume().subscribe({ next: data => this.resumePerformance = data, error: () => this.resumePerformance = [] });
   }
 
   toggleTheme(): void {
@@ -107,6 +111,7 @@ export class DashboardComponent implements OnInit {
   closedOutCount(): number {
     return this.stageCount('REJECTED') + this.stageCount('WITHDRAWN') + this.stageCount('GHOSTED');
   }
+  barHeight(value: number): number { const max = Math.max(1, ...this.weekly.map(item => item.applicationsSent)); return Math.max(8, value / max * 100); }
 
   reminderLabel(reminder: Reminder): string {
     switch (reminder.reminderType) {

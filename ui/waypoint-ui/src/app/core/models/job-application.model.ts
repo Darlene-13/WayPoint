@@ -47,5 +47,6 @@ export interface JobApplicationRequest {
 
 export interface StageChangeRequest {
   newStage: ApplicationStage;
+  reminderDate?: string;
   notes?: string;
 }

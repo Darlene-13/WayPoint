@@ -9,6 +9,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.core.io.Resource;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 
 @RestController
 @RequestMapping("/api/resumes")
@@ -16,6 +20,16 @@ import java.util.UUID;
 public class ResumeController {
 
     private final ResumeService resumeService;
+
+    @PostMapping(value = "/upload", consumes = "multipart/form-data")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResumeResponse upload(@RequestParam String label, @RequestParam(required = false) String targetRole,
+                                 @RequestPart MultipartFile file) { return resumeService.upload(label, targetRole, file); }
+
+    @GetMapping("/files/{storedName:.+}")
+    public ResponseEntity<Resource> file(@PathVariable String storedName) {
+        return ResponseEntity.ok().contentType(MediaType.APPLICATION_OCTET_STREAM).body(resumeService.file(storedName));
+    }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
