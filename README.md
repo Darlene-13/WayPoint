@@ -7,10 +7,6 @@ The project has two parts:
 - `waypoint`: a Spring Boot REST API backed by PostgreSQL.
 - `ui/waypoint-ui`: an Angular web application that consumes the API.
 
-## Why a clear README matters
-
-A README is the first place a new contributor, reviewer, or user looks for context. A clean README explains what the project does, how its parts fit together, how to run it, and what each endpoint is for. This reduces setup time, prevents incorrect API usage, and makes it easier to maintain and extend the project.
-
 ## Main features
 
 ### Company management
