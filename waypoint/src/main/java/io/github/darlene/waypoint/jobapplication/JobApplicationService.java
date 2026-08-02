@@ -6,6 +6,7 @@ import io.github.darlene.waypoint.company.Company;
 import io.github.darlene.waypoint.company.CompanyRepository;
 import io.github.darlene.waypoint.resume.Resume;
 import io.github.darlene.waypoint.resume.ResumeRepository;
+import io.github.darlene.waypoint.reminder.ReminderService;
 import lombok.RequiredArgsConstructor;
 import org.jspecify.annotations.NonNull;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,7 @@ import io.github.darlene.waypoint.jobapplication.dto.JobApplicationRequest;
 import io.github.darlene.waypoint.jobapplication.dto.JobApplicationResponse;
 import io.github.darlene.waypoint.jobapplication.dto.StageChangeRequest;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -25,7 +27,9 @@ public class JobApplicationService {
     private final StageHistoryRepository stageHistoryRepository;
     private final CompanyRepository companyRepository;
     private final ResumeRepository resumeRepository;
+    private final ReminderService reminderService;
 
+    @Transactional
     public JobApplicationResponse create(JobApplicationRequest applicationRequest) {
         Company company = companyRepository.findById(applicationRequest.companyId())
                 .orElseThrow(() -> new ResourceNotFoundException(
@@ -47,11 +51,15 @@ public class JobApplicationService {
                 .salaryMax(applicationRequest.salaryMax())
                 .salaryCurrency(applicationRequest.salaryCurrency())
                 .jobUrl(applicationRequest.jobUrl())
-                .dateApplied(applicationRequest.dateApplied())
+                .dateApplied(applicationRequest.dateApplied() == null
+                        ? LocalDate.now()
+                        : applicationRequest.dateApplied())
                 .applicationDeadline(applicationRequest.applicationDeadline())
                 .notes(applicationRequest.notes())
                 .build();
-        return toResponse(jobApplicationRepository.save(application));
+        JobApplication savedApplication = jobApplicationRepository.save(application);
+        reminderService.scheduleFollowUp(savedApplication);
+        return toResponse(savedApplication);
     }
 
     /**
@@ -84,6 +92,15 @@ public class JobApplicationService {
                 .stage(newStage)
                 .notes(request.notes())
                 .build());
+
+        if (newStage == ApplicationStage.REJECTED
+                || newStage == ApplicationStage.WITHDRAWN
+                || newStage == ApplicationStage.GHOSTED) {
+            reminderService.cancelOpenReminders(id);
+        } else if (newStage == ApplicationStage.OA
+                || newStage == ApplicationStage.INTERVIEW) {
+            reminderService.onStageEntered(application, newStage, request.reminderDate());
+        }
 
         return toResponse(jobApplicationRepository.save(application));
     }
