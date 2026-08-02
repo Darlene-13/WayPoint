@@ -16,6 +16,18 @@ DELETE /api/companies/{id}
 
 The tests covered creating multiple companies, retrieving the company list, retrieving a company by its ID, updating a company, and deleting a company.
 
+The Job Application API is now also available for testing:
+
+```text
+POST   /api/applications
+GET    /api/applications
+GET    /api/applications/{id}
+PATCH  /api/applications/{id}/stage
+DELETE /api/applications/{id}
+```
+
+Creating an application requires the ID of an existing company. Stage changes also create a stage history record. When using Postman, send application creation and stage-change bodies as JSON with the `Content-Type: application/json` header.
+
 The project uses PostgreSQL and Flyway migrations. The initial schema is in:
 
 ```text
@@ -41,7 +53,7 @@ The Angular frontend runs in the separate project located at `ui/waypoint-ui`.
 
 ## Next step
 
-The next feature to complete and test is Job Applications. This includes implementing the application service and controller, connecting applications to companies, and testing the application endpoints against the existing database schema.
+Continue testing the Job Application endpoints, including creation, retrieval, stage changes, filtering by stage, and deletion. The frontend still needs its API wiring and proxy configuration checked against the running backend.
 
 ## Project structure
 
