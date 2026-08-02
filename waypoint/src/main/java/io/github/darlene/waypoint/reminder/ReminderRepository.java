@@ -9,4 +9,6 @@ import java.util.UUID;
 public interface ReminderRepository extends JpaRepository<Reminder, UUID> {
     List<Reminder> findByDueDateAndIsCompletedFalse(LocalDate dueDate);
     List<Reminder> findByApplicationId(UUID applicationId);
+    List<Reminder> findByDueDateGreaterThanAndIsCompletedFalse(LocalDate date);
+    List<Reminder> findByDueDateLessThanAndIsCompletedFalse(LocalDate date);
 }

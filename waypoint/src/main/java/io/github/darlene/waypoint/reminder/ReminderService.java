@@ -4,6 +4,7 @@ import io.github.darlene.waypoint.common.exception.ResourceNotFoundException;
 import io.github.darlene.waypoint.jobapplication.ApplicationStage;
 import io.github.darlene.waypoint.jobapplication.JobApplication;
 import io.github.darlene.waypoint.reminder.dto.ReminderResponse;
+import io.github.darlene.waypoint.reminder.dto.ReminderStatsResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -62,6 +63,31 @@ public class ReminderService {
         return reminderRepository.findByDueDateAndIsCompletedFalse(LocalDate.now()).stream()
                 .map(this::toResponse)
                 .toList();
+    }
+
+    public List<ReminderResponse> findAll() {
+        return reminderRepository.findAll().stream().map(this::toResponse).toList();
+    }
+
+    public List<ReminderResponse> findUpcoming() {
+        return reminderRepository.findByDueDateGreaterThanAndIsCompletedFalse(LocalDate.now())
+                .stream().map(this::toResponse).toList();
+    }
+
+    public List<ReminderResponse> findOverdue() {
+        return reminderRepository.findByDueDateLessThanAndIsCompletedFalse(LocalDate.now())
+                .stream().map(this::toResponse).toList();
+    }
+
+    public ReminderStatsResponse stats() {
+        List<Reminder> reminders = reminderRepository.findAll();
+        LocalDate today = LocalDate.now();
+        return new ReminderStatsResponse(
+                reminders.size(),
+                reminders.stream().filter(r -> !r.isCompleted() && r.getDueDate().equals(today)).count(),
+                reminders.stream().filter(r -> !r.isCompleted() && r.getDueDate().isAfter(today)).count(),
+                reminders.stream().filter(r -> !r.isCompleted() && r.getDueDate().isBefore(today)).count(),
+                reminders.stream().filter(Reminder::isCompleted).count());
     }
 
     public ReminderResponse markComplete(UUID reminderId) {
