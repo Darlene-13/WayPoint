@@ -1,1 +1,193 @@
-:host{display:block;min-height:100vh;background:var(--bg);color:var(--ink)}.page{max-width:1100px;margin:auto;padding:36px 30px}nav{display:flex;gap:20px;border-bottom:1px solid var(--line);padding-bottom:20px}nav a{color:var(--ink-dim);text-decoration:none;font:11px var(--font-mono)}nav a.active{color:var(--amber)}header{display:flex;justify-content:space-between;align-items:end;margin:55px 0 28px}header p{color:var(--amber);text-transform:uppercase;font:10px var(--font-mono)}h1{font-size:52px;margin:0}button{border:1px solid var(--amber);border-radius:8px;padding:10px 14px;background:var(--amber);cursor:pointer}.form{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;padding:20px;background:var(--panel);border:1px solid var(--line);border-radius:12px}.form input,.form select,.form textarea,.tools input,.tools select{padding:12px;background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:8px}.form textarea{grid-column:1/-1}.tools{display:flex;gap:12px;margin:24px 0}.tools input{flex:1}.cards{display:grid;gap:10px}.cards article{display:flex;justify-content:space-between;padding:20px;border:1px solid var(--line);border-radius:12px;background:var(--panel)}h2{margin:8px 0}h2 a{color:var(--ink);text-decoration:none}.cards p,.cards small{color:var(--ink-dim)}.stage{color:var(--amber);font:10px var(--font-mono)}button.danger{background:transparent;border-color:var(--line);color:var(--ink-dim)}.error{color:var(--red)}
+:host {
+  display: block;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--ink);
+  overflow-x: hidden;
+}
+.page {
+  max-width: 1100px;
+  box-sizing: border-box;
+  margin: auto;
+  padding: 36px 30px;
+}
+nav {
+  display: flex;
+  gap: 20px;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 20px;
+}
+nav a {
+  color: var(--ink-dim);
+  text-decoration: none;
+  font: 11px var(--font-mono);
+}
+nav a.active {
+  color: var(--amber);
+}
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  margin: 55px 0 28px;
+}
+header p {
+  color: var(--amber);
+  text-transform: uppercase;
+  font: 10px var(--font-mono);
+}
+h1 {
+  font-size: 52px;
+  margin: 0;
+}
+button {
+  border: 1px solid var(--amber);
+  border-radius: 8px;
+  padding: 10px 14px;
+  background: var(--amber);
+  cursor: pointer;
+}
+.form {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  padding: 20px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}
+.form input,
+.form select,
+.form textarea,
+.tools input,
+.tools select {
+  min-width: 0;
+  box-sizing: border-box;
+  padding: 12px;
+  background: var(--bg);
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+.form textarea {
+  grid-column: 1/-1;
+}
+.tools {
+  display: flex;
+  gap: 12px;
+  margin: 24px 0;
+}
+.tools input {
+  flex: 1;
+}
+.cards {
+  display: grid;
+  gap: 10px;
+}
+.cards article {
+  display: flex;
+  min-width: 0;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--panel);
+}
+.cards article > div {
+  min-width: 0;
+}
+.cards a {
+  overflow-wrap: anywhere;
+}
+h2 {
+  margin: 8px 0;
+}
+h2 a {
+  color: var(--ink);
+  text-decoration: none;
+}
+.cards p,
+.cards small {
+  color: var(--ink-dim);
+}
+.stage {
+  color: var(--amber);
+  font: 10px var(--font-mono);
+}
+button.danger {
+  background: transparent;
+  border-color: var(--line);
+  color: var(--ink-dim);
+}
+.error {
+  color: var(--red);
+}
+@media (max-width: 650px) {
+  .page {
+    width: 100%;
+    padding: 20px 16px 48px;
+  }
+  nav {
+    gap: 0;
+    overflow-x: auto;
+    padding-bottom: 12px;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  nav::-webkit-scrollbar {
+    display: none;
+  }
+  nav a {
+    flex: 0 0 auto;
+    padding: 8px 10px;
+    white-space: nowrap;
+  }
+  nav a:first-child {
+    padding-left: 0;
+  }
+  header {
+    display: block;
+    margin: 36px 0 22px;
+  }
+  h1 {
+    font-size: clamp(38px, 13vw, 48px);
+  }
+  header button {
+    width: 100%;
+    margin-top: 18px;
+  }
+  .form {
+    grid-template-columns: 1fr;
+    padding: 16px;
+  }
+  .form input,
+  .form select,
+  .form textarea,
+  .form button {
+    width: 100%;
+  }
+  .form textarea {
+    grid-column: auto;
+    min-height: 96px;
+  }
+  .tools {
+    flex-direction: column;
+    margin: 18px 0;
+  }
+  .tools input,
+  .tools select {
+    width: 100%;
+  }
+  .cards article {
+    align-items: stretch;
+    flex-direction: column;
+    padding: 16px;
+  }
+  .cards article .danger {
+    align-self: flex-end;
+  }
+  .cards p {
+    overflow-wrap: anywhere;
+  }
+}

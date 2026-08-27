@@ -2,10 +2,11 @@
 
 WayPoint is a job application tracker for keeping a job search organised in one place. It helps you record companies, contacts, applications, resumes, interview progress, and follow-up information instead of spreading those details across notes, spreadsheets, and email.
 
-The project has two parts:
+The project has three parts:
 
 - `waypoint`: a Spring Boot REST API backed by PostgreSQL.
 - `ui/waypoint-ui`: an Angular web application that consumes the API.
+- `waypoint-agent`: the AI orchestration service for job discovery, matching, and tailored application materials.
 
 ## Main features
 
@@ -32,6 +33,37 @@ Save the resumes used during a job search and associate a resume with an applica
 ### Dashboard and reminders
 
 The Angular interface includes dashboard and reminder services for summary information, weekly application counts, resume performance, and follow-ups. These are part of the planned API surface and should be treated as incomplete until their backend controllers are available.
+
+### Waypoint Agent
+
+The planned agent works behind the application to discover suitable jobs, compare them with a selected resume, and draft tailored cover letters. Recommendations and generated documents are presented to the user for review; the agent must not submit an application without explicit approval.
+
+```mermaid
+flowchart TD
+    U[User sets role preferences] --> UI[Angular UI]
+    UI --> API[Spring Boot API]
+    API --> A[Waypoint Agent]
+
+    A --> S[Search configured job sources]
+    S --> N[Normalize and deduplicate listings]
+    N --> M[Match jobs to resume and preferences]
+    M --> R[Rank opportunities and explain fit]
+    R --> UI
+
+    UI -->|User selects a job| C[Build application context]
+    C --> D[Draft tailored cover letter]
+    C --> T[Suggest resume tailoring]
+    D --> Q[Quality and factuality checks]
+    T --> Q
+    Q --> H{User review and approval}
+    H -->|Revise| C
+    H -->|Approve| P[Create or update application record]
+    P --> API
+    API --> DB[(PostgreSQL)]
+    P --> F[Schedule follow-up reminders]
+```
+
+More detailed boundaries and the proposed internal workflow are documented in [`waypoint-agent/README.md`](waypoint-agent/README.md).
 
 ## API endpoints
 
@@ -147,6 +179,7 @@ Development security currently permits API requests so the frontend and tools su
 ```text
 waypoint/                 Spring Boot API and database migrations
 ui/waypoint-ui/           Angular frontend
+waypoint-agent/           AI job-search and document-generation service
 waypoint/src/main/java/   Backend domain, service, and controller code
 waypoint/src/main/resources/db/migration/
                           Flyway database migrations

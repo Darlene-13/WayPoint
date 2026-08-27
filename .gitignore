@@ -1,0 +1,4 @@
+waypoint-agent/.env
+waypoint-agent/.venv/
+**/__pycache__/
+**/.pytest_cache/
